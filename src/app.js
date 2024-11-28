@@ -22,7 +22,6 @@ if (!databaseUrl) {
 }
 
 const parsedUrl = new URL(databaseUrl);
-
 const host = parsedUrl.hostname;
 const port = parsedUrl.port || 3306; // ใช้ค่า 3306 ถ้าไม่ระบุ port
 const user = parsedUrl.username;
@@ -58,6 +57,15 @@ app.get('/api/hi', (req, res) => {
 });
 
 app.get('/api/attractions', (req, res,next) => {
+  connection.query(
+    'SELECT * FROM attractions',
+    function(err,results,fields){
+      res.json(results)
+    }
+  )
+});
+
+app.get('/api/attractions2', (req, res,next) => {
   connection.query(
     'SELECT * FROM attractions',
     function(err,results,fields){
